@@ -40,7 +40,13 @@ var_dump($result);
         ?>
         <div class="contenitore_campo">
             <h2><?= $row['nome_campo'] ?></h2>
-            <h4>Capienza: <?= $row['capienza'] ?></h4>
+            <h4>Capienza: <?= $row['capienza']
+                /*
+                 * Bisogna aggiornare la capienza
+                 * Per farlo si può fare dai data suorce dell'ide e aprire la visualizzazione della tabella campi
+                 * Da qui si possono aggiornare i valori e aggiornare premendo la freccetta verde in alto
+                 */
+                ?></h4>
             <div class="box_image">
                 <a href="campi.php?id_campo=<?= $row['nome_campo'] // Inserire la get ?>">
                     <img src="<?= $row['foto_url']?>" alt="">
