@@ -1,12 +1,20 @@
 <?php
-require_once "Database.php";
+require_once "Database.php"; // Link alla classe
 
 $title = "Basta Calcetto";
 
+// Connessione al database
 $pdo = Database::getInstance()->getConnection();
 
 $result = $pdo->query("SELECT * FROM campi ORDER BY capienza DESC");
+
+/* Var dump brutto
+$stmt = $pdo->prepare("SELECT * FROM campi ORDER BY capienza DESC");
+$stmt->execute();
+$result = $stmt->fetchAll();
 var_dump($result);
+*/
+
 ?>
 
 <!doctype html>
@@ -23,19 +31,25 @@ var_dump($result);
 
     <h1><?= $title ?></h1>
 
+
     <hr>
     <br>
     <div class="contenitore">
-
+        <?php // For per mostrare i risultati
+        foreach($result as $row){
+        ?>
         <div class="contenitore_campo">
-            <h3>Nome campo: </h3>
+            <h2><?= $row['nome_campo'] ?></h2>
+            <h4>Capienza: <?= $row['capienza'] ?></h4>
             <div class="box_image">
-                <a href="campo.php">
-                    <img src="https://lrvicenza.net/wp-content/uploads/2022/06/Stadio-Romeo-Menti-1024x356.jpg" alt="">
+                <a href="campi.php?id_campo=<?= $row['nome_campo'] // Inserire la get ?>">
+                    <img src="<?= $row['foto_url']?>" alt="">
                 </a>
             </div>
         </div>
-
+        <?php
+        }
+        ?>
     </div>
 
 </body>
