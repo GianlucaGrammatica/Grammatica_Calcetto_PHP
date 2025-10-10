@@ -1,5 +1,13 @@
 <?php
+    require_once "Database.php"; // Link alla classe
+
     $title = $_GET['id_campo']; // Prendere il parametro dall'array super globale di get
+
+    // Connessione al database
+    $pdo = Database::getInstance()->getConnection();
+
+    // si usa statement perchè serve una query con parametro
+    $stmt = $pdo->prepare("SELECT * FROM campi WHERE nome_campo = :nome_campo");
 ?>
 <!doctype html>
 <html lang="en">
