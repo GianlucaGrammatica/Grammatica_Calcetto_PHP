@@ -22,9 +22,9 @@ $stmt = $pdo->prepare("SELECT prenotazioni.*, utenti.username FROM prenotazioni
 $stmt->execute(["id_campo" => $title]);
 $prenotazioni = $stmt->fetchAll();
 
+$errorePrenotazione = false;
 if (!empty($_POST)) {
     $stmt = $pdo->prepare("INSERT INTO prenotazioni (id_campo, id_utente, data_prenotazione) VALUES(:id_campo, :id_utente, :data)");
-
     try {
         $stmt->execute([
                 ':id_campo' => $_POST['id_campo'],
@@ -34,9 +34,10 @@ if (!empty($_POST)) {
 
         header("location: index.php"); // Rederict
     } catch (PDOException $e) {
-        echo $e->getMessage();
+        $errorePrenotazione = true;
     }
 }
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -99,6 +100,9 @@ if (!empty($_POST)) {
                     <input type="submit" value="Torna Indietro">
                 </div>
 
+                <?php if ($errorePrenotazione) { ?>
+                    <p class="error">Errore nella prenotazione</p>
+                <?php } ?>
                 <br>
                 <hr class="hr2">
                 <h2>Prenotazioni Attuali:</h2>
