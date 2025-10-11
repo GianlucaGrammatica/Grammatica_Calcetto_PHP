@@ -26,6 +26,7 @@ var_dump($result);
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $title ?></title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://pngimg.com/uploads/football/football_PNG52760.png">
 </head>
 <body>
 
