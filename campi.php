@@ -1,5 +1,6 @@
 <?php
 require_once "Database.php"; // Link alla classe
+session_start();
 
 $title = $_GET['id_campo']; // Prendere il parametro dall'array super globale di get
 
@@ -23,8 +24,11 @@ $stmt->execute(["id_campo" => $title]);
 $prenotazioni = $stmt->fetchAll();
 
 $errorePrenotazione = false;
+
 if (!empty($_POST)) {
+    $errorePrenotazione = false;
     $stmt = $pdo->prepare("INSERT INTO prenotazioni (id_campo, id_utente, data_prenotazione) VALUES(:id_campo, :id_utente, :data)");
+
     try {
         $stmt->execute([
                 ':id_campo' => $_POST['id_campo'],
@@ -51,11 +55,10 @@ if (!empty($_POST)) {
     <link rel="icon" href="https://pngimg.com/uploads/football/football_PNG52760.png">
 </head>
 <body>
-<nav>
-    <strong>
-        <a href="index.php"><- back</a>
-    </strong>
-</nav>
+
+<?php
+require_once "navigation.php";
+?>
 
 <h1><?= $title ?></h1>
 <hr>

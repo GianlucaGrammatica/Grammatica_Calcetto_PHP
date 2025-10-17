@@ -64,3 +64,47 @@ ul {
 .error {
     color: red;
 }
+
+nav {
+    position: sticky;
+    top: 0;
+    padding: 1rem;
+    background-color: antiquewhite;
+}
+
+.NavContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.navlinks {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.navimg {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.navimg img {
+    height: 2rem;
+    margin: 0 1rem;
+}
+
+.navimg h2 {
+    margin: 0;
+}
+
+.nav_link {
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 1rem;
+}
+
+.active {
+    color: pink;
+}

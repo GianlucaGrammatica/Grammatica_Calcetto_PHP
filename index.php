@@ -1,5 +1,6 @@
 <?php
 require_once "Database.php"; // Link alla classe
+session_start();
 
 $title = "Basta Calcetto";
 
@@ -30,14 +31,18 @@ var_dump($result);
 </head>
 <body>
 
-    <h1><?= $title ?></h1>
+<?php
+require_once "navigation.php";
+?>
+
+<h1><?= $title ?></h1>
 
 
-    <hr>
-    <br>
-    <div class="contenitore">
-        <?php // For per mostrare i risultati
-        foreach($result as $row){
+<hr>
+<br>
+<div class="contenitore">
+    <?php // For per mostrare i risultati
+    foreach ($result as $row) {
         ?>
         <div class="contenitore_campo">
             <h2><?= $row['nome_campo'] ?></h2>
@@ -49,15 +54,15 @@ var_dump($result);
                  */
                 ?></h4>
             <div class="box_image">
-                <a href="campi.php?id_campo=<?= $row['nome_campo'] // Inserire la get ?>">
-                    <img src="<?= $row['foto_url']?>" alt="">
+                <a href="campi.php?id_campo=<?= $row['nome_campo'] // Inserire la get    ?>">
+                    <img src="<?= $row['foto_url'] ?>" alt="">
                 </a>
             </div>
         </div>
         <?php
-        }
-        ?>
-    </div>
+    }
+    ?>
+</div>
 
 </body>
 </html>
