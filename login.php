@@ -1,5 +1,6 @@
 <?php
 require_once "Database.php"; // Link alla classe
+require_once 'send_mail.php';
 session_start();
 
 $errore = "";
@@ -12,6 +13,7 @@ if (!empty($_POST)) {
 
     if ($utente && password_verify($_POST['password'], $utente['password'])) {
         $_SESSION['username'] = $utente['username'];
+        sendLoginMail($utente['username'] . "@gmail.com", $utente['nome'] . " " . $utente['cognome']);
         header('Location: index.php');
         exit;
     } else {
@@ -54,11 +56,11 @@ require_once "navigation.php";
         </div>
 
         <input type="submit" value="Login">
-        <?
+        <?php
         if ($errore != "") {
             ?>
             <?= $errore ?>
-        <? }
+        <?php }
         ?>
     </form>
 </div>

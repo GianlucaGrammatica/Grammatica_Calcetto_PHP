@@ -4,6 +4,12 @@ session_start();
 
 $title = $_GET['id_campo']; // Prendere il parametro dall'array super globale di get
 
+/*
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit;
+}
+*/
 // Connessione al database
 $pdo = Database::getInstance()->getConnection();
 
@@ -26,6 +32,7 @@ $prenotazioni = $stmt->fetchAll();
 $errorePrenotazione = false;
 
 if (!empty($_POST)) {
+
     $errorePrenotazione = false;
     $stmt = $pdo->prepare("INSERT INTO prenotazioni (id_campo, id_utente, data_prenotazione) VALUES(:id_campo, :id_utente, :data)");
 
@@ -79,43 +86,47 @@ require_once "navigation.php";
                 <hr class="hr1">
                 <br>
 
-                <input type="hidden" name="id_campo" value="<?= $campo['nome_campo'] ?>">
+                <?php if (isset($_SESSION['username'])) { ?>
+                    <input type="hidden" name="id_campo" value="<?= $campo['nome_campo'] ?>">
 
-                <div>
-                    <strong>
-                        <label for="id_utente">Utente: </label>
-                        <?php foreach ($utenti as $row) { ?>
+                    <div>
+                        <strong>
+                            <label for="id_utente">Utente: <?= $_SESSION['username'] ?></label>
+                            <input type="hidden" name="id_utente" id="id_utente" value="<?= $_SESSION['username'] ?>"
+                                   required readonly>
+                        </strong>
+                    </div>
 
-                            <input type="radio" name="id_utente" id="id_utente" value="<?= $row['id'] ?>" required>
-                            <label for="id_utente"><?= $row['username'] ?></label>
-                        <?php } ?>
-                    </strong>
-                </div>
+                    <br>
+                    <hr class="hr2">
+                    <br>
 
-                <br>
-                <hr class="hr2">
-                <br>
+                    <div>
+                        <label>
+                            <input type="date" name="data" required>
+                        </label>
+                        <input type="submit" value="Prenota">
+                    </div>
 
-                <div>
-                    <label>
-                        <input type="date" name="data" required>
-                    </label>
-                    <input type="submit" value="Torna Indietro">
-                </div>
-
-                <?php if ($errorePrenotazione) { ?>
-                    <p class="error">Errore nella prenotazione</p>
-                <?php } ?>
-                <br>
-                <hr class="hr2">
-                <h2>Prenotazioni Attuali:</h2>
-                <ul>
-                    <?php foreach ($prenotazioni as $row) { ?>
-                        <li><strong><?= $row['username'] ?> - <?= $row['data_prenotazione'] ?></strong></li>
+                    <?php if ($errorePrenotazione) { ?>
+                        <p class="error">Errore nella prenotazione</p>
                     <?php } ?>
-                </ul>
-
-
+                    <br>
+                    <hr class="hr2">
+                    <h2>Prenotazioni Attuali:</h2>
+                    <ul>
+                        <?php foreach ($prenotazioni as $row) { ?>
+                            <li><strong>
+                                    <?php if ($row['username'] == $_SESSION['username']) echo $row['username']; else echo "Busy"; ?>
+                                    - <?= date('d M Y', strtotime($row['data_prenotazione'])); ?></strong></li>
+                        <?php } ?>
+                    </ul>
+                <?php } else { ?>
+                    <div>
+                        <h3>Login First</h3>
+                        <a href="login.php"><input type="button" value="Login"></a>
+                    </div>
+                <?php } ?>
             </div>
         </form>
     </div>

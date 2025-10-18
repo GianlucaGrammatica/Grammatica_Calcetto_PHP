@@ -108,3 +108,21 @@ nav {
 .active {
     color: pink;
 }
+
+.prenotazioni_profilo {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.prenotazioni_profilo_con hr {
+    width: 60%;
+}
+
+.prenotazioni_profilo_con a {
+    text-decoration: none;
+}
+
+.profilo_upper_con {
+    text-align: center;
+}

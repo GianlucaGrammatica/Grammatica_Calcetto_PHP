@@ -14,6 +14,5 @@
                 <a href="login.php" class="nav_link">Login</a>
             <?php } ?>
         </div>
-
     </div>
 </nav>

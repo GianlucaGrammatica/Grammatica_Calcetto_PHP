@@ -28,8 +28,9 @@ if (!empty($_POST)) {
     var_dump($delete);
 }
 
-$stmt = $pdo->prepare("SELECT prenotazioni.*, utenti.username FROM prenotazioni INNER JOIN utenti ON prenotazioni.id_utente = utenti.id ORDER BY id_utente DESC");
-$stmt->execute();
+//$stmt = $pdo->prepare("SELECT prenotazioni.*, utenti.username FROM prenotazioni INNER JOIN utenti ON prenotazioni.id_utente = utenti.id ORDER BY id_utente DESC");
+$stmt = $pdo->prepare("SELECT prenotazioni.*, utenti.username FROM prenotazioni INNER JOIN utenti ON prenotazioni.id_utente = utenti.id WHERE utenti.username = :username ORDER BY id_utente DESC");
+$stmt->execute(['username' => $_SESSION['username']]);
 $prenotazioni = $stmt->fetchAll();
 
 ?>
@@ -51,25 +52,42 @@ require_once "navigation.php";
 ?>
 
 <h1><?= $title ?></h1>
-<h2>Benvenuto <?= $_SESSION['username'] ?></h2>
-<form action="" method="post">
-    <input type="hidden" name="Logout" value="1">
-    <input type="submit" value="LogOut">
-</form>
-<hr>
+<div class="profilo_upper_con">
+    <h2>Benvenuto <?= $_SESSION['username'] ?></h2>
+    <form action="" method="post">
+        <input type="hidden" name="Logout" value="1">
+        <input type="submit" value="LogOut">
+    </form>
+</div>
 <br>
+<hr>
+<br><br>
 <?php // For per mostrare i risultati
 foreach ($prenotazioni as $row) {
     ?>
-    <a href="campi.php?id_campo=<?= $row['id_campo'] ?>">
-        <?= $row['username'] ?> - <?= $row['id_campo'] ?> - <?= $row['data_prenotazione'] ?>
-    </a>
-    <form action="" method="post">
-        <input type="hidden" name="data_prenotazione" value="<?= $row['data_prenotazione'] ?>">
-        <input type="hidden" name="id_campo" value="<?= $row['id_campo'] ?>">
-        <input type="hidden" name="id_utente" value="<?= $row['id_utente'] ?>">
-        <input type="submit" value="DELETE">
-    </form>
+    <div class="prenotazioni_profilo_con">
+        <div class="prenotazioni_profilo">
+            <div>
+                <a href="campi.php?id_campo=<?= $row['id_campo'] ?>">
+                    <?= $row['username'] ?> - <?= $row['id_campo'] ?> - <?= $row['data_prenotazione'] ?>
+                </a>
+            </div>
+
+            <div>
+                <form action="" method="post">
+                    <input type="hidden" name="data_prenotazione" value="<?= $row['data_prenotazione'] ?>">
+                    <input type="hidden" name="id_campo" value="<?= $row['id_campo'] ?>">
+                    <input type="hidden" name="id_utente" value="<?= $row['id_utente'] ?>">
+                    <input type="submit" value="DELETE">
+                </form>
+
+            </div>
+
+        </div>
+        <hr>
+        <br>
+    </div>
+
     <?php
 }
 ?>
