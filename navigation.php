@@ -5,13 +5,13 @@
             <h2>Calcetto</h2>
         </div>
         <div class="navlinks">
-            <a href="index.php" class="nav_link">Home</a>
+            <a href="index" class="nav_link">Home</a>
             <?php
             if (isset($_SESSION['username'])) {
                 ?>
-                <a href="profilo.php" class="nav_link">Profilo</a>
+                <a href="profilo" class="nav_link">Profilo</a>
             <?php } else { ?>
-                <a href="login.php" class="nav_link">Login</a>
+                <a href="login" class="nav_link">Login</a>
             <?php } ?>
         </div>
     </div>

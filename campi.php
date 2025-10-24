@@ -43,7 +43,7 @@ if (!empty($_POST)) {
                 ':data' => $_POST['data']
         ]);
 
-        header("location: index.php"); // Rederict
+        header("location: index"); // Rederict
     } catch (PDOException $e) {
         $errorePrenotazione = true;
     }
@@ -124,7 +124,7 @@ require_once "navigation.php";
                 <?php } else { ?>
                     <div>
                         <h3>Login First</h3>
-                        <a href="login.php"><input type="button" value="Login"></a>
+                        <a href="login"><input type="button" value="Login"></a>
                     </div>
                 <?php } ?>
             </div>

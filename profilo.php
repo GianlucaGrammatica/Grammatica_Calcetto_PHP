@@ -11,7 +11,7 @@ if (!empty($_POST)) {
 
     if (isset($_POST["Logout"]) && $_POST["Logout"] == 1) {
         session_destroy();
-        header("Location: login.php");
+        header("Location: login");
         exit;
     }
 
@@ -23,7 +23,7 @@ if (!empty($_POST)) {
     ]);
 
 
-    header("location: profilo.php");
+    header("location: profilo");
 
     var_dump($delete);
 }

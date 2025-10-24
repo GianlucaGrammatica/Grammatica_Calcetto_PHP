@@ -54,7 +54,7 @@ require_once "navigation.php";
                  */
                 ?></h4>
             <div class="box_image">
-                <a href="campi.php?id_campo=<?= $row['nome_campo'] // Inserire la get    ?>">
+                <a href="campi?id_campo=<?= $row['nome_campo'] // Inserire la get     ?>">
                     <img src="<?= $row['foto_url'] ?>" alt="">
                 </a>
             </div>

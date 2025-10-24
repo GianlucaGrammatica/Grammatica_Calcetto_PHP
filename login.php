@@ -14,7 +14,7 @@ if (!empty($_POST)) {
     if ($utente && password_verify($_POST['password'], $utente['password'])) {
         $_SESSION['username'] = $utente['username'];
         sendLoginMail($utente['username'] . "@gmail.com", $utente['nome'] . " " . $utente['cognome']);
-        header('Location: index.php');
+        header('Location: index');
         exit;
     } else {
         $errore = "Credenziali non valide";
