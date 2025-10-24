@@ -19,7 +19,9 @@ $stmt->bindParam(':nome_campo', $title);
 $stmt->execute();
 $campo = $stmt->fetch();
 
-$utenti = $pdo->query("SELECT * FROM utenti");
+$id_utente_sessione_Query = $pdo->prepare("SELECT * FROM utenti WHERE username = :username");
+$id_utente_sessione_Query->execute([':username' => $_SESSION['username']]);
+$user_id = $id_utente_sessione_Query->fetch();
 
 //$stmt = $pdo->prepare("SELECT * FROM prenotazioni WHERE id_campo = :id_campo");
 $stmt = $pdo->prepare("SELECT prenotazioni.*, utenti.username FROM prenotazioni 
@@ -36,6 +38,7 @@ if (!empty($_POST)) {
     $errorePrenotazione = false;
     $stmt = $pdo->prepare("INSERT INTO prenotazioni (id_campo, id_utente, data_prenotazione) VALUES(:id_campo, :id_utente, :data)");
 
+    var_dump($_POST['id_utente']);
     try {
         $stmt->execute([
                 ':id_campo' => $_POST['id_campo'],
@@ -46,6 +49,7 @@ if (!empty($_POST)) {
         header("location: index"); // Rederict
     } catch (PDOException $e) {
         $errorePrenotazione = true;
+        //var_dump($e->getMessage());
     }
 }
 
@@ -91,8 +95,8 @@ require_once "navigation.php";
 
                     <div>
                         <strong>
-                            <label for="id_utente">Utente: <?= $_SESSION['username'] ?></label>
-                            <input type="hidden" name="id_utente" id="id_utente" value="<?= $_SESSION['username'] ?>"
+                            <label for="id_utente">Utente: <?= $_SESSION[''] ?></label>
+                            <input type="hidden" name="id_utente" id="id_utente" value="<?= $user_id["id"] ?>"
                                    required readonly>
                         </strong>
                     </div>
